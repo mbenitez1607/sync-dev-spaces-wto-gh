@@ -1,0 +1,85 @@
+# define GitHub Project v2 to Jira Project mapping
+# It is used to extract the sprint, story points and status mapping
+githubProjects:
+  - name: Red Hat OpenShift Dev Spaces and Web Terminal Priorities
+    storyPoints:
+      fieldName: Story Points
+      type: number
+    status:
+      fieldName: Status
+      type: singleSelect
+    sprint:
+      fieldName: Sprint
+      type: iteration
+
+statusTypeMappings:
+  - name: Eclipse Che Status Mapping
+    # default is Backlog if no mapping is found
+    default: Backlog
+    mapping:
+      - fromGithub: 📋 Backlog
+        toJira: Backlog
+      - fromGithub: 📅 Planned
+        toJira: Backlog
+      - fromGithub: Unplanned Tasks
+        toJira: Backlog
+      - fromGithub: 🚧 In Progress
+        toJira: In Progress
+      - fromGithub: Blocked
+        toJira: Backlog
+      - fromGithub: Ready for Review
+        toJira: Resolved
+      - fromGithub: ✅ Done
+        toJira: Closed
+      - fromGithub: Pending Customer Input
+        toJira: Backlog
+      - fromGithub: Analyzing
+        toJira: Backlog
+
+issuesTypeMappings:
+  - name: Eclipse Che Issue Mapping
+    default: Task
+    mapping:
+      - fromGithubLabel: kind/epic
+        toJira: Epic
+      - fromGithubLabel: kind/bug
+        toJira: Bug
+      - fromGithubLabel: kind/enhancement
+        toJira: Feature
+      - fromGithubLabel: kind/task
+        toJira: Task
+
+syncProjects:
+  - name: "Eclipse Che"
+    github:
+      owner: eclipse-che
+      repo: che
+      project: Red Hat OpenShift Dev Spaces and Web Terminal Priorities
+      afterDate: 2024-10-01
+    useMapping:
+     issueType: Eclipse Che Issue Mapping
+     statusType: Eclipse Che Status Mapping
+    jira:
+      projectKey: DSWTO
+      component: Eclipse Che
+      globalIdPrefix: eclipse-che
+      sprintBoard: Dev Spaces and WTO board
+    maxBatchSize: 200
+    
+  - name: "Devworkspace Operator"
+    github:
+      owner: devfile
+      repo: devworkspace-operator
+      project: Red Hat OpenShift Dev Spaces and WebTerminal Priorities
+      afterDate: 2024-10-01
+    useMapping:
+     issueType: Eclipse Che Issue Mapping
+     statusType: Eclipse Che Status Mapping
+    jira:
+      projectKey: DSWTO
+      component: Devworkspace Operator
+      globalIdPrefix: dwo
+      sprintBoard: Dev Spaces and WTO board
+    maxBatchSize: 200
+
+######
